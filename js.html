@@ -1,8 +1,22 @@
 <script>
 
-function auto_grow(element) {
-  element.style.height = "17px";
-  element.style.height = (element.scrollHeight)+"px";
+function auto_grow(e) {
+  e.style.height = "17px";
+  e.style.height = (e.scrollHeight)+"px";
+  console.log(e.value)
+  if (e.value){
+    showSaveCancelBtns()
+  } else {
+    hideSaveCancelBtns()
+  }
+}
+
+function showSaveCancelBtns(){
+  document.getElementById('newSaveCancel').style.display = 'flex'
+}
+
+function hideSaveCancelBtns(){
+  document.getElementById('newSaveCancel').style.display = 'none'
 }
 
 function saveNewNote(){
@@ -19,7 +33,10 @@ function saveNewNote(){
 function cancelNewNote(){
   document.getElementById('newLabel').value = 0
   document.getElementById('newText').value = ''
+  document.getElementById('newText').style.height = '20px'
   document.getElementById('newType').value = 0
+  
+  hideSaveCancelBtns()
 }
 
 </script>
