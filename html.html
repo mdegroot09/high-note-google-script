@@ -11,7 +11,7 @@
     </div>
     <div class="newNote">
       <div style="width: 25%; display: flex; justify-content: flex-end;">
-        <select class="labelDropdown">
+        <select class="labelDropdown" id="newLabel">
           <option value="0" class="optionText" selected>General</option>
           <option value="1" class="optionText">Closing Coordinators</option>
           <option value="2" class="optionText">Listing Coordinators</option>
@@ -26,18 +26,18 @@
         </select>
       </div>
       <div style="width: 50%; display: flex; justify-content: center;">
-        <textarea class="addText" oninput="auto_grow(this)" placeholder="text"></textarea>
+        <textarea class="addText" id="newText" oninput="auto_grow(this)" placeholder="text"></textarea>
       </div>
       <div style="width: 25%; display: flex; justify-content: flex-start;">
-        <select class="labelDropdown">
+        <select class="labelDropdown" id="newType">
           <option value="0" class="optionText" selected>Note</option>
           <option value="1" class="optionText">To-do</option>
         </select>
       </div>
     </div>
     <div style="width: 100%; display: flex; justify-content: center; margin-top: 10px;">
-      <div class="btn save">save</div>
-      <div class="btn cancel">cancel</div>
+      <div class="btn save" onClick="saveNewNote()">save</div>
+      <div class="btn cancel" onClick="cancelNewNote()">cancel</div>
     </div>
   </body>
   <?!= include('js'); ?>

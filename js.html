@@ -5,4 +5,21 @@ function auto_grow(element) {
   element.style.height = (element.scrollHeight)+"px";
 }
 
+function saveNewNote(){
+  let e = document.getElementById('newLabel')
+  console.log(e.options[e.selectedIndex].text)
+  let text = document.getElementById('newText').value
+  console.log(text)
+  e = document.getElementById('newType')
+  console.log(e.options[e.selectedIndex].text)
+  
+  cancelNewNote()
+}
+
+function cancelNewNote(){
+  document.getElementById('newLabel').value = 0
+  document.getElementById('newText').value = ''
+  document.getElementById('newType').value = 0
+}
+
 </script>
