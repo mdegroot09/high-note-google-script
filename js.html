@@ -25,8 +25,8 @@ function displayNotes(notes){
       display = 'none'
     }
     document.getElementById('displayNotes').innerHTML += (
-      '<div class="newNote" style="display: ' + display + '">' +
-        '<div style="width: 25%; display: flex; justify-content: flex-end;">' +
+      '<div class="newNote displayNote" style="display: ' + display + '">' +
+        '<div style="width: 25%; max-width: 150px; display: flex; justify-content: flex-end;">' +
           '<select class="labelDropdown display" id="label' + a.id + '" disabled>' +
             '<option value="0" class="optionText">General</option>' +
             '<option value="1" class="optionText">Closing Coordinators</option>' +
@@ -42,10 +42,10 @@ function displayNotes(notes){
             '<option value="11" class="optionText" selected>All</option>' +
           '</select>' +
         '</div>' +
-        '<div style="width: 50%; display: flex; justify-content: center;">' +
+        '<div style="width: calc(50vw - 25px); padding-left: 6px; display: flex; justify-content: center;">' +
           '<textarea class="addText display" id="note' + a.id + '" oninput="" disabled>' + a.note + '</textarea>' +
         '</div>' +
-        '<div style="width: 25%; display: flex; justify-content: flex-start;">' +
+        '<div style="width: 25%; max-width: 150px; display: flex; justify-content: flex-start;">' +
           '<select class="labelDropdown display" id="type' + a.id + '" disabled>' +
             '<option value="0" class="optionText">Note</option>' +
             '<option value="1" class="optionText">To-do</option>' +
