@@ -20,8 +20,12 @@ function load(){
 
 function displayNotes(notes){
   notes.forEach(function(a){
+    let display = 'flex'
+    if (a.show == false){
+      display = 'none'
+    }
     document.getElementById('displayNotes').innerHTML += (
-      '<div class="newNote">' +
+      '<div class="newNote" style="display: ' + display + '">' +
         '<div style="width: 25%; display: flex; justify-content: flex-end;">' +
           '<select class="labelDropdown display" id="label' + a.id + '" disabled>' +
             '<option value="0" class="optionText">General</option>' +
@@ -39,7 +43,7 @@ function displayNotes(notes){
           '</select>' +
         '</div>' +
         '<div style="width: 50%; display: flex; justify-content: center;">' +
-          '<textarea class="addText display" id="note' + a.id + '" oninput="" style="color: #3e494c" disabled>' + a.note + '</textarea>' +
+          '<textarea class="addText display" id="note' + a.id + '" oninput="" disabled>' + a.note + '</textarea>' +
         '</div>' +
         '<div style="width: 25%; display: flex; justify-content: flex-start;">' +
           '<select class="labelDropdown display" id="type' + a.id + '" disabled>' +
