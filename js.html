@@ -1,5 +1,21 @@
 <script>
 
+window.addEventListener('load', load())
+
+function load(){
+  // Get user info
+  google.script.run  
+  // if successful, display the data 
+  .withSuccessHandler(function(res){
+    console.log(res.notes)
+  })
+  // if error
+  .withFailureHandler(function(err){
+    console.log("error occured", err);
+  })
+  .getNotes()
+}
+
 function auto_grow(e) {
   e.style.height = "17px";
   e.style.height = (e.scrollHeight)+"px";
