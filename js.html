@@ -39,7 +39,7 @@ function displayNotes(notes){
           '</select>' +
         '</div>' +
         '<div style="width: 50%; display: flex; justify-content: center;">' +
-          '<textarea class="addText" id="search' + a.id + '" oninput="">' + a.note + '</textarea>' +
+          '<textarea class="addText" id="note' + a.id + '" oninput="">' + a.note + '</textarea>' +
         '</div>' +
         '<div style="width: 25%; display: flex; justify-content: flex-start;">' +
           '<select class="labelDropdown" id="type' + a.id + '">' +
@@ -51,6 +51,7 @@ function displayNotes(notes){
       '<br>'
     )
     document.getElementById('label' + a.id).value = a.label
+    auto_grow(document.getElementById('note' + a.id))
     document.getElementById('type' + a.id).value = a.type
   })
 }
