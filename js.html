@@ -64,7 +64,7 @@ function auto_grow(e) {
   e.style.height = "17px";
   e.style.height = (e.scrollHeight)+"px";
   console.log(e.value)
-  if (e.value){
+  if (document.getElementById('newText').value){
     showSaveCancelBtns()
   } else {
     hideSaveCancelBtns()
