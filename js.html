@@ -8,12 +8,51 @@ function load(){
   // if successful, display the data 
   .withSuccessHandler(function(res){
     console.log(res.notes)
+    document.notes = res.notes
+    displayNotes(res.notes)
   })
   // if error
   .withFailureHandler(function(err){
     console.log("error occured", err);
   })
   .getNotes()
+}
+
+function displayNotes(notes){
+  notes.forEach(function(a){
+    document.getElementById('displayNotes').innerHTML += (
+      '<div class="newNote">' +
+        '<div style="width: 25%; display: flex; justify-content: flex-end;">' +
+          '<select class="labelDropdown" id="label' + a.id + '">' +
+            '<option value="0" class="optionText">General</option>' +
+            '<option value="1" class="optionText">Closing Coordinators</option>' +
+            '<option value="2" class="optionText">Listing Coordinators</option>' +
+            '<option value="3" class="optionText">MoBro</option>' +
+            '<option value="4" class="optionText">ReBro Buy</option>' +
+            '<option value="5" class="optionText">ReBro Sell</option>' +
+            '<option value="6" class="optionText">Sales Team</option>' +
+            '<option value="7" class="optionText">AZ</option>' +
+            '<option value="8" class="optionText">CO</option>' +
+            '<option value="9" class="optionText">ID</option>' +
+            '<option value="10" class="optionText">NV</option>' +
+            '<option value="11" class="optionText" selected>All</option>' +
+          '</select>' +
+        '</div>' +
+        '<div style="width: 50%; display: flex; justify-content: center;">' +
+          '<textarea class="addText" id="search' + a.id + '" oninput="">' + a.note + '</textarea>' +
+        '</div>' +
+        '<div style="width: 25%; display: flex; justify-content: flex-start;">' +
+          '<select class="labelDropdown" id="type' + a.id + '">' +
+            '<option value="0" class="optionText">Note</option>' +
+            '<option value="1" class="optionText">To-do</option>' +
+          '</select>' +
+        '</div>' +
+      '</div>' +
+      '<br>'
+    )
+    document.getElementById('label' + a.id).value = a.label
+    document.getElementById('type' + a.id).value = a.type
+  })
 }
 
 function auto_grow(e) {
