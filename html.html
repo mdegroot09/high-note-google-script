@@ -10,6 +10,9 @@
       <h1>The High Note</h1>
     </div>
     
+    <!-- Click container -->
+    <div id="clickContainer" onClick="saveEntry(document.activeId)" style="position: fixed; top: 0; left: 0; background: transparent; width: 100vw; height: 100vh; display: none; z-index: 1;"></div>
+    
     <!-- New Note -->
     <div style="width: 100%">
       <div style="width: 25%">
@@ -34,7 +37,7 @@
         </select>
       </div>
       <div style="width: 50%; display: flex; justify-content: center;">
-        <textarea class="addText" id="newText" oninput="auto_grow(this)" placeholder="text"></textarea>
+        <textarea class="addText" id="newText" oninput="autoGrow(this)" placeholder="text"></textarea>
       </div>
       <div style="width: 25%; display: flex; justify-content: flex-start;">
         <select class="labelDropdown" id="newType">

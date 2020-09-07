@@ -25,9 +25,9 @@ function displayNotes(notes){
       display = 'none'
     }
     document.getElementById('displayNotes').innerHTML += (
-      '<div class="newNote displayNote" style="display: ' + display + '">' +
+      '<div class="newNote displayNote" id="entry' + a.id + '" style="display: ' + display + '" onClick="editEntry(' + a.id + ')">' +
         '<div style="width: 25%; max-width: 150px; display: flex; justify-content: flex-end;">' +
-          '<select class="labelDropdown display" id="label' + a.id + '" disabled>' +
+          '<select class="labelDropdown editDD display" id="label' + a.id + '" disabled>' +
             '<option value="0" class="optionText">General</option>' +
             '<option value="1" class="optionText">Closing Coordinators</option>' +
             '<option value="2" class="optionText">Listing Coordinators</option>' +
@@ -43,10 +43,10 @@ function displayNotes(notes){
           '</select>' +
         '</div>' +
         '<div style="width: calc(50vw - 25px); padding-left: 6px; display: flex; justify-content: center;">' +
-          '<textarea class="addText display" id="note' + a.id + '" oninput="" disabled>' + a.note + '</textarea>' +
+          '<textarea class="addText display" id="note' + a.id + '" oninput="autoGrow(this)" style="width: 100%; max-width: 100%;" disabled>' + a.note + '</textarea>' +
         '</div>' +
         '<div style="width: 25%; max-width: 150px; display: flex; justify-content: flex-start;">' +
-          '<select class="labelDropdown display" id="type' + a.id + '" disabled>' +
+          '<select class="labelDropdown editDD display" id="type' + a.id + '" disabled>' +
             '<option value="0" class="optionText">Note</option>' +
             '<option value="1" class="optionText">To-do</option>' +
           '</select>' +
@@ -55,12 +55,74 @@ function displayNotes(notes){
       '<br>'
     )
     document.getElementById('label' + a.id).value = a.label
-    auto_grow(document.getElementById('note' + a.id))
+    autoGrow(document.getElementById('note' + a.id))
     document.getElementById('type' + a.id).value = a.type
   })
 }
 
-function auto_grow(e) {
+function editEntry(id){
+  console.log('the id is ' + id)
+  document.activeId = id
+  document.getElementById('entry' + id).style.zIndex = 2
+  document.getElementById('clickContainer').style.display = 'block'
+  
+  // Enable each container
+  document.getElementById('label' + id).disabled = false
+  document.getElementById('note' + id).disabled = false
+  document.getElementById('type' + id).disabled = false
+  
+  // Remove display class from containers
+  document.getElementById('label' + id).classList.remove('display')
+  document.getElementById('note' + id).classList.remove('display')
+  document.getElementById('type' + id).classList.remove('display')
+  
+  // Place cursor at end of textarea
+  activateCursor(id)
+  
+  // Save on tab or enter
+  document.getElementById('note' + id).addEventListener('keydown', function(event){
+    if (event.keyCode == 9) {
+      event.preventDefault();
+      saveEntry(id)
+    }
+  })
+  
+  // Remove click listener from element
+  document.getElementById('entry' + id).onclick = ''
+}
+
+function activateCursor(id) {
+  let e = document.getElementById('note' + id)
+  e.focus()
+  e.setSelectionRange(e.value.length,e.value.length)
+}
+
+function saveEntry(id){
+  console.log('container closed')
+  document.getElementById('entry' + id).style.zIndex = 0
+  document.getElementById('clickContainer').style.display = 'none'
+  
+  // Disable each container
+  document.getElementById('label' + id).disabled = true
+  document.getElementById('note' + id).disabled = true
+  document.getElementById('type' + id).disabled = true
+  
+  // Add display class to containers
+  document.getElementById('label' + id).classList.add('display')
+  document.getElementById('note' + id).classList.add('display')
+  document.getElementById('type' + id).classList.add('display')
+  
+  // Auto resize textarea
+  autoGrow(document.getElementById('note' + id))
+  
+  // Add click listener to element
+  document.getElementById('entry' + id).addEventListener('click', function(event){
+     event.preventDefault();
+     editEntry(id)
+  })
+}
+
+function autoGrow(e) {
   e.style.height = "17px";
   e.style.height = (e.scrollHeight)+"px";
   console.log(e.value)

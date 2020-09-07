@@ -91,10 +91,17 @@ select option:hover{
 
 .displayNote{
   background: #58dbc2;
+  background: transparent;
   width: calc(100% - 50px);
   max-width: calc(50% + 300px);
   margin: 0;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.editDD{
+  width: 100%;
+  padding-left: 5px;
 }
 
 .display {
@@ -107,6 +114,11 @@ select option:hover{
   -moz-appearance: none; 
   /* for Safari, Chrome, Opera */ 
   -webkit-appearance: none;
+  opacity: 1;
+}
+
+.display:hover{
+  cursor: pointer;
 }
 
 </style>
