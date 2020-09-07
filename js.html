@@ -89,6 +89,13 @@ function editEntry(id){
   
   // Remove click listener from element
   document.getElementById('entry' + id).onclick = ''
+  document.getElementById('entry' + id).removeEventListener('click', clickListener)
+}
+
+function clickListener(event){
+  let id = document.activeId
+  event.preventDefault();
+  editEntry(id)
 }
 
 function activateCursor(id) {
@@ -116,10 +123,7 @@ function saveEntry(id){
   autoGrow(document.getElementById('note' + id))
   
   // Add click listener to element
-  document.getElementById('entry' + id).addEventListener('click', function(event){
-     event.preventDefault();
-     editEntry(id)
-  })
+  document.getElementById('entry' + id).addEventListener('click', clickListener)
 }
 
 function autoGrow(e) {
