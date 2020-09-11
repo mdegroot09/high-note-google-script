@@ -3,7 +3,7 @@
 window.addEventListener('load', load())
 
 function load(){
-  // Get user info
+  // run google script
   google.script.run  
   // if successful, display the data 
   .withSuccessHandler(function(res){
@@ -168,13 +168,20 @@ function hideSaveCancelBtns(){
 }
 
 function saveNewNote(){
-  let e = document.getElementById('newLabel')
-  console.log(e.options[e.selectedIndex].text)
-  let text = document.getElementById('newText').value
-  console.log(text)
-  e = document.getElementById('newType')
-  console.log(e.options[e.selectedIndex].text)
+  let label = document.getElementById('newLabel').value
+  let note = document.getElementById('newText').value
+  let type =  document.getElementById('newType').value
   
+  let newEntry = {
+    isNewEntry: true,
+    label: label,
+    note: note,
+    created: Number(new Date()),
+    type: type,
+    show: true
+  }
+  
+  runAddEditEntry(newEntry)
   cancelNewNote()
 }
 
@@ -185,6 +192,21 @@ function cancelNewNote(){
   document.getElementById('newType').value = 0
   
   hideSaveCancelBtns()
+}
+
+function runAddEditEntry(entry){
+  // run google script
+  google.script.run  
+  // if successful, display the data 
+  .withSuccessHandler(function(res){
+    console.log(res)
+    
+  })
+  // if error
+  .withFailureHandler(function(err){
+    console.log("error occured", err);
+  })
+  .addEditEntry(entry)
 }
 
 </script>
