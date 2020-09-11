@@ -42,51 +42,54 @@ function createShiftKeyListeners(){
 
 function displayNotes(notes){
   notes.forEach(function(a){
-    let display = 'flex'
-    if (a.show == false){
-      display = 'none'
-    }
-    document.getElementById('displayNotes').innerHTML += (
-      '<div class="newNote displayNote" id="entry' + a.id + '" style="display: ' + display + '; position: relative;">' +
-        '<div id="clickEntry' + a.id + '" style="position: absolute; height: 100%; width: 100%;" onClick="editEntry(' + a.id + ')"></div>' +
-        '<div style="width: 25%; max-width: 150px; display: flex; justify-content: flex-end;" enterKeyHint="' + a.id + '">' +
-          '<select class="labelDropdown editDD display" id="label' + a.id + '" disabled>' +
-            '<option value="0" class="optionText">General</option>' +
-            '<option value="1" class="optionText">Closing Coordinators</option>' +
-            '<option value="2" class="optionText">Listing Coordinators</option>' +
-            '<option value="3" class="optionText">MoBro</option>' +
-            '<option value="4" class="optionText">ReBro Buy</option>' +
-            '<option value="5" class="optionText">ReBro Sell</option>' +
-            '<option value="6" class="optionText">Sales Team</option>' +
-            '<option value="7" class="optionText">AZ</option>' +
-            '<option value="8" class="optionText">CO</option>' +
-            '<option value="9" class="optionText">ID</option>' +
-            '<option value="10" class="optionText">NV</option>' +
-          '</select>' +
-        '</div>' +
-        '<div style="width: calc(50vw - 25px); padding-left: 6px; display: flex; justify-content: center;">' +
-          '<textarea class="addText display" id="note' + a.id + '" oninput="autoGrow(this)" style="width: 100%; max-width: 100%;" disabled>' + a.note + '</textarea>' +
-        '</div>' +
-        '<div style="width: 25%; max-width: 150px; display: flex; justify-content: flex-start;">' +
-          '<select class="labelDropdown editDD display" id="type' + a.id + '" disabled>' +
-            '<option value="0" class="optionText">Note</option>' +
-            '<option value="1" class="optionText">To-do</option>' +
-          '</select>' +
-        '</div>' +
-      '</div>' +
-      '<br>'
-    )
-    console.log('id: label' + a.id)
+    document.getElementById('displayNotes').innerHTML += createEntryHTML(a)
     autoGrow(document.getElementById('note' + a.id))
     setTimeout(function(){ 
       document.getElementById('label' + a.id).value = a.label
       document.getElementById('type' + a.id).value = a.type
-    }, .1)
+    }, 1)
   })
 }
 
+function createEntryHTML(entry){
+  let display = 'flex'
+  if (entry.show == false){
+    display = 'none'
+  }
+  
+  return (
+    '<div class="newNote displayNote" id="entry' + entry.id + '" style="display: ' + display + '; position: relative;">' +
+      '<div id="clickEntry' + entry.id + '" style="position: absolute; height: 100%; width: 100%;" onClick="editEntry(' + entry.id + ')"></div>' +
+      '<div style="width: 25%; max-width: 150px; display: flex; justify-content: flex-end;" enterKeyHint="' + entry.id + '">' +
+        '<select class="labelDropdown editDD display" id="label' + entry.id + '" disabled>' +
+          '<option value="0" class="optionText">General</option>' +
+          '<option value="1" class="optionText">Closing Coordinators</option>' +
+          '<option value="2" class="optionText">Listing Coordinators</option>' +
+          '<option value="3" class="optionText">MoBro</option>' +
+          '<option value="4" class="optionText">ReBro Buy</option>' +
+          '<option value="5" class="optionText">ReBro Sell</option>' +
+          '<option value="6" class="optionText">Sales Team</option>' +
+          '<option value="7" class="optionText">AZ</option>' +
+          '<option value="8" class="optionText">CO</option>' +
+          '<option value="9" class="optionText">ID</option>' +
+          '<option value="10" class="optionText">NV</option>' +
+        '</select>' +
+      '</div>' +
+      '<div style="width: calc(50vw - 25px); padding-left: 6px; display: flex; justify-content: center;">' +
+        '<textarea class="addText display" id="note' + entry.id + '" oninput="autoGrow(this)" style="width: 100%; max-width: 100%;" disabled>' + entry.note + '</textarea>' +
+      '</div>' +
+      '<div style="width: 25%; max-width: 150px; display: flex; justify-content: flex-start;">' +
+        '<select class="labelDropdown editDD display" id="type' + entry.id + '" disabled>' +
+          '<option value="0" class="optionText">Note</option>' +
+          '<option value="1" class="optionText">To-do</option>' +
+        '</select>' +
+      '</div>' +
+    '</div>' +
+    '<br>'
+  )
+}
+
 function editEntry(id){
-  console.log('the id is ' + id)
   document.activeId = id
   document.getElementById('clickEntry' + id).style.display = 'none'
   document.getElementById('entry' + id).style.zIndex = 2
@@ -119,7 +122,6 @@ function editEntry(id){
 
 function clickListener(event){
   let id = document.activeId
-  console.log(event)
   event.preventDefault();
   editEntry(id)
 }
@@ -131,7 +133,6 @@ function activateCursor(id) {
 }
 
 function saveEntry(id){
-  console.log('container closed, id: ' + id)
   document.getElementById('clickEntry' + id).style.display = 'block'
   document.getElementById('entry' + id).style.zIndex = 0
   document.getElementById('clickContainer').style.display = 'none'
@@ -153,7 +154,6 @@ function saveEntry(id){
 function autoGrow(e) {
   e.style.height = "17px";
   e.style.height = (e.scrollHeight)+"px";
-  console.log(e.value)
   if (document.getElementById('newText').value){
     showSaveCancelBtns()
   } else {
