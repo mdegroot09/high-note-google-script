@@ -62,7 +62,6 @@ function displayNotes(notes){
             '<option value="8" class="optionText">CO</option>' +
             '<option value="9" class="optionText">ID</option>' +
             '<option value="10" class="optionText">NV</option>' +
-            '<option value="11" class="optionText" selected>All</option>' +
           '</select>' +
         '</div>' +
         '<div style="width: calc(50vw - 25px); padding-left: 6px; display: flex; justify-content: center;">' +
@@ -77,9 +76,12 @@ function displayNotes(notes){
       '</div>' +
       '<br>'
     )
-    document.getElementById('label' + a.id).value = a.label
+    console.log('id: label' + a.id)
     autoGrow(document.getElementById('note' + a.id))
-    document.getElementById('type' + a.id).value = a.type
+    setTimeout(function(){ 
+      document.getElementById('label' + a.id).value = a.label
+      document.getElementById('type' + a.id).value = a.type
+    }, .1)
   })
 }
 
