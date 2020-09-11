@@ -10,12 +10,34 @@ function load(){
     console.log(res.notes)
     document.notes = res.notes
     displayNotes(res.notes)
+    createShiftKeyListeners()
   })
   // if error
   .withFailureHandler(function(err){
     console.log("error occured", err);
   })
   .getNotes()
+}
+
+function createShiftKeyListeners(){
+
+  // Set shiftDown on keydown
+  document.querySelector('body').addEventListener('keydown', function(e){
+    
+    // shift keydown becomes true
+    if (e.keyCode == 16){
+      document.shiftDown = true
+    }
+  })
+    
+  // Clear shiftDown on keyup
+  document.querySelector('body').addEventListener('keyup', function(e){
+
+    // shift keydown becomes false
+    if (e.keyCode == 16){
+      document.shiftDown = false
+    }
+  })
 }
 
 function displayNotes(notes){
@@ -82,16 +104,15 @@ function editEntry(id){
   activateCursor(id)
   
   // Save on tab or enter
-  //  document.getElementById('note' + id).addEventListener('keydown', function(event){
-  //    if (event.keyCode == 9) {
-  //      event.preventDefault();
-  //      saveEntry(id)
-  //    }
-  //  })
-  
-  // Remove click listener from element
-  // document.getElementById('entry' + id).onclick = ''
-  // document.getElementById('entry' + id).removeEventListener('click', clickListener)
+  document.getElementById('type' + id).addEventListener('keydown', function(e){
+      
+    // if tab and shiftkey is not true
+    if (e.keyCode == 9 && document.shiftDown !== true) {
+      e.preventDefault();
+      document.shiftDown = false
+      return saveEntry(id)
+    }
+  })
 }
 
 function clickListener(event){
@@ -125,9 +146,6 @@ function saveEntry(id){
   
   // Auto resize textarea
   autoGrow(document.getElementById('note' + id))
-  
-  // Add click listener to element
-  // document.getElementById('entry' + id).addEventListener('click', clickListener)
 }
 
 function autoGrow(e) {
