@@ -1,15 +1,15 @@
 <script>
 
-window.addEventListener('load', load())
+window.addEventListener('load', runGetNotes())
 
-function load(){
+function runGetNotes(){
   // run google script
   google.script.run  
   // if successful, display the data 
   .withSuccessHandler(function(res){
     console.log(res.notes)
     document.notes = res.notes
-    displayNotes(res.notes)
+    displayNotes()
     createShiftKeyListeners()
   })
   // if error
@@ -40,7 +40,9 @@ function createShiftKeyListeners(){
   })
 }
 
-function displayNotes(notes){
+function displayNotes(){
+  let notes = document.notes
+  document.getElementById('displayNotes').innerHTML = ''
   notes.forEach(function(a){
     document.getElementById('displayNotes').innerHTML += createEntryHTML(a)
     autoGrow(document.getElementById('note' + a.id))
@@ -181,7 +183,6 @@ function saveNewNote(){
   let type =  document.getElementById('newType').value
   
   let newEntry = {
-    isNewEntry: true,
     label: label,
     note: note,
     created: Number(new Date()),
@@ -190,8 +191,18 @@ function saveNewNote(){
   }
   
   activateNewText()
-  runAddEditEntry(newEntry)
+  displayNewEntry(newEntry)
+  runAddEntry(newEntry)
   cancelNewNote()
+}
+
+function displayNewEntry(newEntry){
+  let notes = document.notes
+  let newId = notes[0].id + 1
+  notes.splice(0, 0, newEntry)
+  document.notes = notes
+  console.log(notes)
+  displayNotes()
 }
 
 function cancelNewNote(){
@@ -203,19 +214,18 @@ function cancelNewNote(){
   hideSaveCancelBtns()
 }
 
-function runAddEditEntry(entry){
+function runAddEntry(entry){
   // run google script
   google.script.run  
   // if successful, display the data 
   .withSuccessHandler(function(res){
     console.log(res)
-    
   })
   // if error
   .withFailureHandler(function(err){
     console.log("error occured", err);
   })
-  .addEditEntry(entry)
+  .addEntry(entry)
 }
 
 </script>

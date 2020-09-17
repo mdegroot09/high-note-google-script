@@ -27,15 +27,6 @@ function getNotes(){
   return {notes: notes}
 }
 
-function addEditEntry(entry){
-  if (entry.isNewEntry){
-    addEntry(entry)
-  }
-  else {
-    editEntry(entry)
-  }
-}
-
 function addEntry(entry){
   let ss = SpreadsheetApp.getActive().getSheetByName('Data').insertRowBefore(2)
   let newId = (ss.getRange('A3').getValue() * 1) + 1
@@ -45,6 +36,8 @@ function addEntry(entry){
   ss.getRange('D2').setValue(new Date(entry.created))
   ss.getRange('E2').setValue(entry.type)
   ss.getRange('F2').setValue(entry.show)
+  
+  return 'Success. New entry added.'
 }
 
 function editEntry(entry){
