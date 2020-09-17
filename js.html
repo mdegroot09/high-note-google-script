@@ -132,6 +132,12 @@ function activateCursor(id) {
   e.setSelectionRange(e.value.length,e.value.length)
 }
 
+function activateNewText() {
+  let e = document.getElementById('newText')
+  e.focus()
+  e.setSelectionRange(e.value.length,e.value.length)
+}
+
 function saveEntry(id){
   document.getElementById('clickEntry' + id).style.display = 'block'
   document.getElementById('entry' + id).style.zIndex = 0
@@ -183,6 +189,7 @@ function saveNewNote(){
     show: true
   }
   
+  activateNewText()
   runAddEditEntry(newEntry)
   cancelNewNote()
 }

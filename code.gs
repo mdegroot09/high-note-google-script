@@ -42,7 +42,7 @@ function addEntry(entry){
   ss.getRange('A2').setValue(newId)
   ss.getRange('B2').setValue(entry.label)
   ss.getRange('C2').setValue(entry.note)
-  ss.getRange('D2').setValue(entry.created)
+  ss.getRange('D2').setValue(new Date(entry.created))
   ss.getRange('E2').setValue(entry.type)
   ss.getRange('F2').setValue(entry.show)
 }
