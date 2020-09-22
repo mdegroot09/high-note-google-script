@@ -5,7 +5,7 @@ window.addEventListener('load', load())
 function load(){
   // submit new note on enter
   document.getElementById('newText').addEventListener('keydown', function(e){
-    // shift keydown becomes false
+    // if enter, stop event and save note
     if (e.keyCode == 13){
       event.preventDefault()
       saveNewNote()
@@ -55,7 +55,10 @@ function createShiftKeyListeners(){
 }
 
 function displayNotes(){
-  let notes = document.notes
+  let notes = document.notes;
+  console.log('notes:')
+  console.log(notes)
+  
   document.getElementById('displayNotes').innerHTML = ''
   notes.forEach(function(a){
     document.getElementById('displayNotes').innerHTML += createEntryHTML(a)
@@ -212,8 +215,15 @@ function saveNewNote(){
 
 function displayNewEntry(newEntry){
   let notes = document.notes
-  let newId = notes[0].id + 1
-  notes.splice(0, 0, newEntry)
+  
+  // if new entry is same label and type as previous, add to text
+  if (newEntry.label == notes[0].label && newEntry.type == notes[0].type){
+    notes[0].note = notes[0].note + '\n\n' + newEntry.note
+  } else {
+    let newId = notes[0].id + 1
+    notes.splice(0, 0, newEntry)
+  }
+  
   document.notes = notes
   console.log(notes)
   displayNotes()

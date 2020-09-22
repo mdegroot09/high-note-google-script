@@ -28,6 +28,9 @@ function getNotes(){
 }
 
 function addEntry(entry){
+  let addToPrev = checkAddToPrev(entry)
+  if (addToPrev){return 'Success. Added to previous entry.'}
+  
   let ss = SpreadsheetApp.getActive().getSheetByName('Data').insertRowBefore(2)
   let newId = (ss.getRange('A3').getValue() * 1) + 1
   ss.getRange('A2').setValue(newId)
@@ -38,6 +41,19 @@ function addEntry(entry){
   ss.getRange('F2').setValue(entry.show)
   
   return 'Success. New entry added.'
+}
+
+function checkAddToPrev(entry){
+  let ss = SpreadsheetApp.getActive().getSheetByName('Data')
+  let prevLabel = ss.getRange('B2').getValue()
+  let prevType = ss.getRange('E2').getValue()
+  if (entry.label == prevLabel && entry.type == prevType){
+    let note = ss.getRange('C2').getValue()
+    note = note + '\n\n' + entry.note
+    ss.getRange('C2').setValue(note)
+    return true
+  }
+  return false
 }
 
 function editEntry(entry){
