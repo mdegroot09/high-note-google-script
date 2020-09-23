@@ -226,6 +226,7 @@ function displayNewEntry(newEntry){
     notes[0].note = notes[0].note + '\n\n' + newEntry.note
   } else {
     let newId = notes[0].id + 1
+    newEntry.id = newId
     notes.splice(0, 0, newEntry)
   }
   
