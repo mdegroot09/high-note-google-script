@@ -10,6 +10,11 @@ function load(){
       event.preventDefault()
       saveNewNote()
     }
+    
+    // if esc, cancel note
+    if (e.keyCode == 27){
+      cancelNewNote()
+    }
   })
   
   // get then display notes
@@ -184,19 +189,6 @@ function saveEntry(id){
 function autoGrow(e) {
   e.style.height = "17px";
   e.style.height = (e.scrollHeight)+"px";
-  if (document.getElementById('newText').value){
-    showSaveCancelBtns()
-  } else {
-    hideSaveCancelBtns()
-  }
-}
-
-function showSaveCancelBtns(){
-  document.getElementById('newSaveCancel').style.display = 'flex'
-}
-
-function hideSaveCancelBtns(){
-  document.getElementById('newSaveCancel').style.display = 'none'
 }
 
 function saveNewNote(){
@@ -236,12 +228,10 @@ function displayNewEntry(newEntry){
 }
 
 function cancelNewNote(){
-  document.getElementById('newLabel').value = 0
+  // document.getElementById('newLabel').value = 0
   document.getElementById('newText').value = ''
   document.getElementById('newText').style.height = '20px'
   document.getElementById('newType').value = 0
-  
-  hideSaveCancelBtns()
 }
 
 function runAddEntry(entry){
