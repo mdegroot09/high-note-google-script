@@ -63,11 +63,9 @@ function displayNotes(){
   notes.forEach(function(a){
     document.getElementById('displayNotes').innerHTML += createEntryHTML(a)
     autoGrow(document.getElementById('note' + a.id))
-    setTimeout(function(){ 
-      document.getElementById('label' + a.id).value = a.label
-      document.getElementById('type' + a.id).value = a.type
-    }, 1)
   })
+  
+  updateDropdowns(notes)
 }
 
 function createEntryHTML(entry){
@@ -106,6 +104,13 @@ function createEntryHTML(entry){
     '</div>' +
     '<br>'
   )
+}
+
+function updateDropdowns(notes){
+  notes.forEach(function(a){
+    document.getElementById('label' + a.id).value = a.label
+    document.getElementById('type' + a.id).value = a.type
+  })
 }
 
 function editEntry(id){
