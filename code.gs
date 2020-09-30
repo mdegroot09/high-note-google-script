@@ -1,5 +1,8 @@
 function doGet(request){
-  return HtmlService.createTemplateFromFile('html').evaluate();
+  let html = HtmlService.createTemplateFromFile('html').evaluate();
+  html.setTitle('Noted')
+  html.setFaviconUrl('https://cdn2.iconfinder.com/data/icons/pretty-office-10/512/Pencil-512.png')
+  return html
 }
 
 function include(filename){
