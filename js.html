@@ -215,7 +215,11 @@ function displayNewEntry(newEntry){
   
   // if new entry is same label and type as previous, add to text
   if (newEntry.label == notes[0].label && newEntry.type == notes[0].type){
-    notes[0].note = notes[0].note + '\n\n' + newEntry.note
+    let br = '\n\n'
+    if (newEntry.note.split('')[0] == '-'){
+      br = '\n'
+    }
+    notes[0].note = notes[0].note + br + newEntry.note
   } else {
     let newId = notes[0].id + 1
     newEntry.id = newId
