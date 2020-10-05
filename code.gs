@@ -64,5 +64,19 @@ function checkAddToPrev(entry){
 }
 
 function editEntry(entry){
+  let ss = SpreadsheetApp.getActive().getSheetByName('Data')
+  let row = 2
+  while (ss.getRange('A' + row).getValue() >= entry.id){
+    if (entry.id == ss.getRange('A' + row).getValue()){
+      ss.getRange('B' + row).setValue(entry.label)
+      ss.getRange('C' + row).setValue(entry.note)
+      ss.getRange('E' + row).setValue(entry.type)
+      ss.getRange('F' + row).setValue(entry.show)
+      
+      return 'Success. Entry Updated.'
+    }
+    row += 1
+  }
   
+  return 'Error. Entry not found.'
 }

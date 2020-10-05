@@ -184,6 +184,16 @@ function saveEntry(id){
   
   // Auto resize textarea
   autoGrow(document.getElementById('note' + id))
+  
+  let entry = {
+    id: id, 
+    label: document.getElementById('label' + id).value,
+    note: document.getElementById('note' + id).value,
+    type: document.getElementById('type' + id).value,
+    show: true
+  }
+  
+  runEditEntry(entry)
 }
 
 function autoGrow(e) {
@@ -250,6 +260,20 @@ function runAddEntry(entry){
     console.log("error occured", err);
   })
   .addEntry(entry)
+}
+
+function runEditEntry(entry){
+  // run google script
+  google.script.run  
+  // if successful, display the data 
+  .withSuccessHandler(function(res){
+    console.log(res)
+  })
+  // if error
+  .withFailureHandler(function(err){
+    console.log("error occured", err);
+  })
+  .editEntry(entry)
 }
 
 </script>
