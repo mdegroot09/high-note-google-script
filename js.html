@@ -29,7 +29,8 @@ function load(){
     
   })
   
-  // establish initial keydowns
+  // establish initial document variables
+  document.activeId = null
   document.shiftDown = false
   document.ctrlDown = false
   
@@ -45,7 +46,7 @@ function runGetNotes(){
     console.log(res.notes)
     document.notes = res.notes
     displayNotes()
-    createShiftKeyListeners()
+    createListeners()
   })
   // if error
   .withFailureHandler(function(err){
@@ -54,7 +55,7 @@ function runGetNotes(){
   .getNotes()
 }
 
-function createShiftKeyListeners(){
+function createListeners(){
 
   // Set document on keydown
   document.querySelector('body').addEventListener('keydown', function(e){
@@ -67,6 +68,16 @@ function createShiftKeyListeners(){
     // control keydown becomes true
     else if (e.keyCode == 17){
       document.ctrlDown = true
+    }
+    
+    // down arrow and ctrl activate next index
+    else if (e.keyCode == 40 && document.ctrlDown == true){
+      activateNextIndex(document.activeId)
+    }
+    
+    // up arrow and ctrl activate next index
+    else if (e.keyCode == 38 && document.ctrlDown == true){
+      // activatePrevIndex(document.activeId)
     }
   })
     
@@ -200,6 +211,34 @@ function clickListener(event){
   editEntry(id)
 }
 
+function activateNextIndex(id) { 
+  let notes = document.notes
+  
+  // if no id is currently selected, activate first note
+  if (!id){
+    return editEntry(notes[0].id)
+  }
+  
+  // else find index of current selection and activate next
+  let currentIndex = null
+  for (let i = 0; i < notes.length; i++) { 
+    if (notes[i].id === id) { 
+      currentIndex = i
+      break
+    } 
+  } 
+  for (let j = currentIndex + 1; j <= notes.length; i++){
+    if (j >= notes.length){
+      saveEntry(id)
+      return editEntry(notes[0].id) // activate first note of array
+    }
+    else if (notes[j].show){
+      saveEntry(id)
+      return editEntry(notes[j].id) // activate first showable note
+    }
+  }
+} 
+
 function activateCursor(id) {
   let e = document.getElementById('note' + id)
   e.focus()
@@ -238,6 +277,7 @@ function saveEntry(id){
     show: true
   }
   
+  document.activeId = null
   runEditEntry(entry)
 }
 
