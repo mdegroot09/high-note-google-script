@@ -12,7 +12,7 @@ function load(){
       document.getElementById('newText').value = '- ' 
     }
     
-    // if enter w/o ctrl, stop event and save note
+    // if enter w/o ctrl, break line
     else if (e.keyCode == 13 && document.ctrlDown == true){
       let val = document.getElementById('newText').value
       document.getElementById('newText').value = val += '\n'
@@ -156,14 +156,33 @@ function editEntry(id){
   // Place cursor at end of textarea
   activateCursor(id)
   
-  // Save on tab or enter
+  // Save on text enter
+  document.getElementById('note' + id).addEventListener('keydown', function(e){
+    // if enter w/o ctrl, stop event and save note
+    if (e.keyCode == 13 && document.ctrlDown !== true){
+      event.preventDefault()
+      saveEntry(id)
+      return activateNewText()
+    }
+    
+    // if enter w/o ctrl, break line
+    else if (e.keyCode == 13 && document.ctrlDown == true){
+      event.preventDefault()
+      let val = document.getElementById('note' + id).value
+      document.getElementById('note' + id).value = val += '\n'
+      autoGrow(document.getElementById('note' + id))
+    }
+  })
+  
+  // Save on tab
   document.getElementById('type' + id).addEventListener('keydown', function(e){
       
     // if tab and shiftkey is not true
     if (e.keyCode == 9 && document.shiftDown !== true) {
       e.preventDefault();
       document.shiftDown = false
-      return saveEntry(id)
+      saveEntry(id)
+      return activateNewText()
     }
   })
 }
