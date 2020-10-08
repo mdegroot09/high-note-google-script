@@ -9,7 +9,10 @@ function load(){
     if (e.keyCode == 13 && document.ctrlDown == false){
       event.preventDefault()
       saveNewNote()
-      document.getElementById('newText').value = '- ' 
+      // document.getElementById('newText').value = '- ' 
+      let id = document.notes[0].id
+      console.log('id: ' + id)
+      editEntry(id)
     }
     
     // if enter w/o ctrl, break line
@@ -25,6 +28,10 @@ function load(){
     }
     
   })
+  
+  // establish initial keydowns
+  document.shiftDown = false
+  document.ctrlDown = false
   
   // get then display notes
   runGetNotes()
