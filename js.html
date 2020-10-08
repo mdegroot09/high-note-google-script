@@ -5,16 +5,25 @@ window.addEventListener('load', load())
 function load(){
   // submit new note on enter
   document.getElementById('newText').addEventListener('keydown', function(e){
-    // if enter, stop event and save note
-    if (e.keyCode == 13){
+    // if enter w/o ctrl, stop event and save note
+    if (e.keyCode == 13 && document.ctrlDown == false){
       event.preventDefault()
       saveNewNote()
+      document.getElementById('newText').value = '- ' 
+    }
+    
+    // if enter w/o ctrl, stop event and save note
+    else if (e.keyCode == 13 && document.ctrlDown == true){
+      let val = document.getElementById('newText').value
+      document.getElementById('newText').value = val += '\n'
+      autoGrow(document.getElementById('newText'))
     }
     
     // if esc, cancel note
-    if (e.keyCode == 27){
+    else if (e.keyCode == 27){
       cancelNewNote()
     }
+    
   })
   
   // get then display notes
@@ -40,21 +49,31 @@ function runGetNotes(){
 
 function createShiftKeyListeners(){
 
-  // Set shiftDown on keydown
+  // Set document on keydown
   document.querySelector('body').addEventListener('keydown', function(e){
     
     // shift keydown becomes true
     if (e.keyCode == 16){
       document.shiftDown = true
     }
+    
+    // control keydown becomes true
+    else if (e.keyCode == 17){
+      document.ctrlDown = true
+    }
   })
     
-  // Clear shiftDown on keyup
+  // Clear document keydown on keyup
   document.querySelector('body').addEventListener('keyup', function(e){
 
     // shift keydown becomes false
     if (e.keyCode == 16){
       document.shiftDown = false
+    }
+    
+    // control keydown becomes false
+    else if (e.keyCode == 17){
+      document.ctrlDown = false
     }
   })
 }
