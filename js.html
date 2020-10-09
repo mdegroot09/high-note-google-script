@@ -77,7 +77,7 @@ function createListeners(){
     
     // up arrow and ctrl activate next index
     else if (e.keyCode == 38 && document.ctrlDown == true){
-      // activatePrevIndex(document.activeId)
+      activatePrevIndex(document.activeId)
     }
   })
     
@@ -227,10 +227,38 @@ function activateNextIndex(id) {
       break
     } 
   } 
-  for (let j = currentIndex + 1; j <= notes.length; i++){
+  for (let j = currentIndex + 1; j <= notes.length; j++){
     if (j >= notes.length){
       saveEntry(id)
       return editEntry(notes[0].id) // activate first note of array
+    }
+    else if (notes[j].show){
+      saveEntry(id)
+      return editEntry(notes[j].id) // activate first showable note
+    }
+  }
+} 
+
+function activatePrevIndex(id) { 
+  let notes = document.notes
+  
+  // if no id is currently selected, activate first note
+  if (!id){
+    return editEntry(notes[notes.length - 1].id)
+  }
+  
+  // else find index of current selection and activate next
+  let currentIndex = null
+  for (let i = 0; i < notes.length; i++) { 
+    if (notes[i].id === id) { 
+      currentIndex = i
+      break
+    } 
+  } 
+  for (let j = currentIndex - 1; j >= -1; j--){
+    if (j < 0){
+      saveEntry(id)
+      return editEntry(notes[notes.length - 1].id) // activate last note of array
     }
     else if (notes[j].show){
       saveEntry(id)
