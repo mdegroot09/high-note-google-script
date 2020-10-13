@@ -36,6 +36,7 @@ function load(){
   
   // get then display notes
   runGetNotes()
+  activateNewText()
 }
 
 function runGetNotes(){
@@ -349,7 +350,6 @@ function displayNewEntry(newEntry){
 }
 
 function cancelNewNote(){
-  // document.getElementById('newLabel').value = 0
   document.getElementById('newText').value = ''
   document.getElementById('newText').style.height = '20px'
   document.getElementById('newType').value = 0
