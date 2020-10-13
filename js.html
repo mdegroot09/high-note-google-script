@@ -220,13 +220,8 @@ function activateNextIndex(id) {
   }
   
   // else find index of current selection and activate next
-  let currentIndex = null
-  for (let i = 0; i < notes.length; i++) { 
-    if (notes[i].id === id) { 
-      currentIndex = i
-      break
-    } 
-  } 
+  let currentIndex = findIndex(id)
+  
   for (let j = currentIndex + 1; j <= notes.length; j++){
     if (j >= notes.length){
       saveEntry(id)
@@ -239,6 +234,16 @@ function activateNextIndex(id) {
   }
 } 
 
+function findIndex(id){
+  let notes = document.notes
+  
+  for (let i = 0; i < notes.length; i++) { 
+    if (notes[i].id === id) { 
+      return i  // current index
+    } 
+  } 
+}
+
 function activatePrevIndex(id) { 
   let notes = document.notes
   
@@ -248,13 +253,9 @@ function activatePrevIndex(id) {
   }
   
   // else find index of current selection and activate next
-  let currentIndex = null
-  for (let i = 0; i < notes.length; i++) { 
-    if (notes[i].id === id) { 
-      currentIndex = i
-      break
-    } 
-  } 
+  let currentIndex = findIndex(id)
+  console.log('activatePrevIndex currentIndex: ' + currentIndex)
+  
   for (let j = currentIndex - 1; j >= -1; j--){
     if (j < 0){
       saveEntry(id)
@@ -337,17 +338,13 @@ function displayNewEntry(newEntry){
   let notes = document.notes
   
   // if new entry is same label and type as previous, add to text
-  if (newEntry.label == notes[0].label && newEntry.type == notes[0].type){
-    let br = '\n\n'
-    if (newEntry.note.split('')[0] == '-'){
-      br = '\n'
-    }
-    notes[0].note = notes[0].note + br + newEntry.note
-  } else {
-    let newId = notes[0].id + 1
-    newEntry.id = newId
-    notes.splice(0, 0, newEntry)
-  }
+  //  if (newEntry.label == notes[0].label && newEntry.type == notes[0].type){
+  //    notes[0].note = notes[0].note + '\n' + newEntry.note
+  //  } else {
+  let newId = notes[0].id + 1
+  newEntry.id = newId
+  notes.splice(0, 0, newEntry)
+  // }
   
   document.notes = notes
   console.log(notes)

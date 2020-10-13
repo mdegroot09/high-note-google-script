@@ -52,10 +52,10 @@ function checkAddToPrev(entry){
   let prevType = ss.getRange('E2').getValue()
   if (entry.label == prevLabel && entry.type == prevType){
     let note = ss.getRange('C2').getValue()
-    let br = '\n\n'
-    if (entry.note.split('')[0] == '-'){
-      br = '\n'
-    }
+    //    let br = '\n\n'
+    //    if (entry.note.split('')[0] == '-'){
+    let br = '\n'
+    //    }
     note = note + br + entry.note
     ss.getRange('C2').setValue(note)
     return true
