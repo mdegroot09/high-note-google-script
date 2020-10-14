@@ -111,13 +111,36 @@ function resizeNotes(){
 function displayNotes(){
   let notes = document.notes;
   
+  let filteredNotes = filterNotes(notes)
+  
   document.getElementById('displayNotes').innerHTML = ''
-  notes.forEach(function(a){
+  filteredNotes.forEach(function(a){
     document.getElementById('displayNotes').innerHTML += createEntryHTML(a)
     autoGrow(document.getElementById('note' + a.id))
   })
   
-  updateDropdowns(notes)
+  updateDropdowns(filteredNotes)
+}
+
+function filterNotes(notes){
+  let filterLabel = document.getElementById('filterLabel').value
+  let filterType = document.getElementById('filterType').value
+  
+  let labelFiltered = notes.filter(function(a){
+    if (filterLabel == 11){
+      return a
+    }
+    return (filterLabel == a.label)
+  })
+  
+  let filtered = labelFiltered.filter(function(a){
+    if (filterType == 2){
+      return a
+    }
+    return (filterType == a.type)
+  })
+
+  return filtered
 }
 
 function createEntryHTML(entry){

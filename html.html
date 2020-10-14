@@ -57,7 +57,7 @@
     </div>
     <div class="newNote">
       <div style="width: 25%; display: flex; justify-content: flex-end;">
-        <select class="labelDropdown" id="filterLabel">
+        <select class="labelDropdown" id="filterLabel" onChange="displayNotes()">
           <option value="0" class="optionText">General</option>
           <option value="1" class="optionText">Closing Coordinators</option>
           <option value="2" class="optionText">Listing Coordinators</option>
@@ -76,9 +76,10 @@
         <textarea class="addText" id="search" oninput="" placeholder="search"></textarea>
       </div>
       <div style="width: 25%; display: flex; justify-content: flex-start;">
-        <select class="labelDropdown" id="filterLabel">
+        <select class="labelDropdown" id="filterType" onChange="displayNotes()">
           <option value="0" class="optionText">Note</option>
           <option value="1" class="optionText">To-do</option>
+          <option value="2" class="optionText" selected>All</option>
         </select>
       </div>
     </div>
