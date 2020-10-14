@@ -11,7 +11,6 @@ function load(){
       saveNewNote()
       // document.getElementById('newText').value = '- ' 
       let id = document.notes[0].id
-      console.log('id: ' + id)
       editEntry(id)
     }
     
@@ -26,10 +25,10 @@ function load(){
     else if (e.keyCode == 27){
       cancelNewNote()
     }
-    
   })
   
   // establish initial document variables
+  document.notes = []
   document.activeId = null
   document.shiftDown = false
   document.ctrlDown = false
@@ -44,10 +43,10 @@ function runGetNotes(){
   google.script.run  
   // if successful, display the data 
   .withSuccessHandler(function(res){
-    console.log(res.notes)
     document.notes = res.notes
     displayNotes()
     createListeners()
+    window.addEventListener('resize', resizeNotes)
   })
   // if error
   .withFailureHandler(function(err){
@@ -97,10 +96,20 @@ function createListeners(){
   })
 }
 
+function resizeNotes(){
+  let notes = document.notes
+  notes.forEach(function(a){
+    if (a.show == true){
+      try {
+        autoGrow(document.getElementById('note' + a.id))
+      }
+      catch(e){}
+    }
+  })
+}
+
 function displayNotes(){
   let notes = document.notes;
-  console.log('notes:')
-  console.log(notes)
   
   document.getElementById('displayNotes').innerHTML = ''
   notes.forEach(function(a){
@@ -190,11 +199,7 @@ function editEntry(id){
       else if (e.keyCode == 13 && document.ctrlDown == true){
         event.preventDefault()
         let val = document.getElementById('note' + id).value
-        console.log('*******')
-        console.log(val.match(/\n/g))
-        // if (val.split('').slice(-2).join() != '\n'){
-          document.getElementById('note' + id).value = val + '\n'
-        // }
+        document.getElementById('note' + id).value = val + '\n'
         autoGrow(document.getElementById('note' + id))
       }
     }
@@ -310,8 +315,6 @@ function saveEntry(id){
   
   let currentIndex = findIndex(id)
   document.notes[currentIndex] = entry
-  console.log('saveEntry notes:')
-  console.log(document.notes)
   document.activeId = null
   runEditEntry(entry)
 }
@@ -348,7 +351,6 @@ function displayNewEntry(newEntry){
   notes.splice(0, 0, newEntry)
   
   document.notes = notes
-  console.log(notes)
   displayNotes()
 }
 
