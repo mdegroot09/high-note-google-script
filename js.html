@@ -18,7 +18,7 @@ function load(){
     // if enter w/o ctrl, break line
     else if (e.keyCode == 13 && document.ctrlDown == true){
       let val = document.getElementById('newText').value
-      document.getElementById('newText').value = val += '\n'
+      document.getElementById('newText').value = val + '\n'
       autoGrow(document.getElementById('newText'))
     }
     
@@ -176,22 +176,30 @@ function editEntry(id){
   activateCursor(id)
   
   // Save on text enter
-  document.getElementById('note' + id).addEventListener('keydown', function(e){
-    // if enter w/o ctrl, stop event and save note
-    if (e.keyCode == 13 && document.ctrlDown !== true){
-      event.preventDefault()
-      saveEntry(id)
-      return activateNewText()
+  let noteListeners = (
+    function(e){
+      // if enter w/o ctrl, stop event and save note
+      if (e.keyCode == 13 && document.ctrlDown !== true){
+        event.preventDefault()
+        document.getElementById('note' + id).removeEventListener('keydown', noteListeners)
+        saveEntry(id)
+        return activateNewText()
+      }
+      
+      // if enter w/o ctrl, break line
+      else if (e.keyCode == 13 && document.ctrlDown == true){
+        event.preventDefault()
+        let val = document.getElementById('note' + id).value
+        console.log('*******')
+        console.log(val.match(/\n/g))
+        // if (val.split('').slice(-2).join() != '\n'){
+          document.getElementById('note' + id).value = val + '\n'
+        // }
+        autoGrow(document.getElementById('note' + id))
+      }
     }
-    
-    // if enter w/o ctrl, break line
-    else if (e.keyCode == 13 && document.ctrlDown == true){
-      event.preventDefault()
-      let val = document.getElementById('note' + id).value
-      document.getElementById('note' + id).value = val += '\n'
-      autoGrow(document.getElementById('note' + id))
-    }
-  })
+  )
+  document.getElementById('note' + id).addEventListener('keydown', noteListeners)
   
   // Save on tab
   document.getElementById('type' + id).addEventListener('keydown', function(e){
@@ -204,12 +212,6 @@ function editEntry(id){
       return activateNewText()
     }
   })
-}
-
-function clickListener(event){
-  let id = document.activeId
-  event.preventDefault();
-  editEntry(id)
 }
 
 function activateNextIndex(id) { 
@@ -255,7 +257,6 @@ function activatePrevIndex(id) {
   
   // else find index of current selection and activate next
   let currentIndex = findIndex(id)
-  console.log('activatePrevIndex currentIndex: ' + currentIndex)
   
   for (let j = currentIndex - 1; j >= -1; j--){
     if (j < 0){
@@ -309,6 +310,8 @@ function saveEntry(id){
   
   let currentIndex = findIndex(id)
   document.notes[currentIndex] = entry
+  console.log('saveEntry notes:')
+  console.log(document.notes)
   document.activeId = null
   runEditEntry(entry)
 }
