@@ -329,6 +329,11 @@ function saveNewNote(){
   let note = document.getElementById('newText').value
   let type =  document.getElementById('newType').value
   
+  // quit if note has nothing written
+  if (!note){
+    return 
+  }
+  
   let newEntry = {
     label: label,
     note: note,
