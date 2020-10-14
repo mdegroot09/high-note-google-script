@@ -124,6 +124,7 @@ function displayNotes(){
 
 function filterNotes(notes){
   let filterLabel = document.getElementById('filterLabel').value
+  let filterNote = document.getElementById('filterNote').value
   let filterType = document.getElementById('filterType').value
   
   let labelFiltered = notes.filter(function(a){
@@ -133,7 +134,14 @@ function filterNotes(notes){
     return (filterLabel == a.label)
   })
   
-  let filtered = labelFiltered.filter(function(a){
+  let noteFiltered = labelFiltered.filter(function(a){
+    if (filterNote == ''){
+      return a
+    }
+    return (a.note.includes(filterNote))
+  })
+  
+  let filtered = noteFiltered.filter(function(a){
     if (filterType == 2){
       return a
     }
